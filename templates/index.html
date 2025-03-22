@@ -39,7 +39,7 @@
                     </p>
                     <button onclick="copyToClipboard('${data.short_url}')">Copy</button>
                 `;
-                document.getElementById('long_url').value = ''; // ✅ Clear input field after success
+                document.getElementById('long_url').value = ''; 
             } else {
                 document.getElementById('result').innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
             }
