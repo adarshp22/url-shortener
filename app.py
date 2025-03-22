@@ -137,7 +137,7 @@ def shorten_url():
         db.session.add(new_entry)
         db.session.commit()
 
-    return jsonify({'short_url': f"{RAILWAY_BASE_URL}/{short_code}"})
+    return jsonify({'short_url': f"https://url-shortener-production-8cc2.up.railway.app/{short_code}"})
 
 @app.route('/<short_code>', methods=['GET'])
 def redirect_url(short_code):
