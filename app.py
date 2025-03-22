@@ -122,7 +122,7 @@ def redirect_to_url(short_code):
     if mapping:
         mapping.click_count += 1  # ✅ Increment click count
         db.session.commit()
-        return redirect(mapping.long_url)  # ✅ Redirect to original URL
+        return redirect(mapping.long_url, code=302)  # ✅ Ensure 302 redirect
     return jsonify({"error": "URL not found"}), 404
 
 @app.route('/stats/<short_code>', methods=['GET'])
