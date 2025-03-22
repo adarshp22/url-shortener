@@ -117,7 +117,7 @@ def shorten_url():
 #         db.session.commit()
 #         return redirect(mapping.long_url)
 #     return jsonify({'error': 'URL not found'}), 404
-def shorten_url():
+def redirect_short_url():
     data = request.json
     long_url = data.get("long_url")
 
