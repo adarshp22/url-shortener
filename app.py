@@ -105,8 +105,8 @@ def shorten_url():
         db.session.add(new_entry)
         db.session.commit()
 
-    # return jsonify({'short_url': f"http://127.0.0.1:5000/{short_code}"})
-    return jsonify({'short_url': f"https://url-shortener-production-8cc2.up.railway.app"{short_code}})
+    return jsonify({'short_url': f"http://127.0.0.1:5000/{short_code}"})
+    # return jsonify({'short_url': f"https://url-shortener-production-8cc2.up.railway.app"{short_code}})
 
 
 @app.route('/<short_code>', methods=['GET'])
