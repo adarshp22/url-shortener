@@ -117,20 +117,25 @@ def shorten_url():
 #         db.session.commit()
 #         return redirect(mapping.long_url)
 #     return jsonify({'error': 'URL not found'}), 404
-def redirect_to_url(short_code):
-    mapping = URLMapping.query.filter_by(short_code=short_code).first()
-    if mapping:
-        mapping.click_count += 1  # Update click count
-        db.session.commit()
-        
-        long_url = mapping.long_url
+def shorten_url():
+    data = request.json
+    long_url = data.get("long_url")
 
-        # 🚀 Ensure URL has HTTP/HTTPS prefix
-        if not long_url.startswith("http"):
-            long_url = "https://" + long_url  # Add HTTPS if missing
+    if not long_url:
+        return jsonify({"error": "Missing URL"}), 400
 
-        return redirect(long_url, code=302)  # Redirect properly
-    return jsonify({"error": "URL not found"}), 404
+    # Generate short code
+    short_code = generate_short_code()
+    
+    # Store in database
+    new_mapping = URLMapping(long_url=long_url, short_code=short_code)
+    db.session.add(new_mapping)
+    db.session.commit()
+
+   
+    railway_base_url = "https://url-shortener-production-8cc2.up.railway.app"
+    
+    return jsonify({"short_url": f"{railway_base_url}/{short_code}"})
 
 @app.route('/stats/<short_code>', methods=['GET'])
 
