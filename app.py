@@ -75,7 +75,7 @@ def index():
 
 #     return jsonify({'short_url': f"http://127.0.0.1:5000/{short_code}"})
 
-RAILWAY_BASE_URL = "https://url-shortener-production-8cc2.up.railway.app"
+# RAILWAY_BASE_URL = "https://url-shortener-production-8cc2.up.railway.app"
 
 # def shorten_url():
 #     """Shorten a given long URL."""
