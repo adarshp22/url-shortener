@@ -109,14 +109,21 @@ def shorten_url():
 
 
 @app.route('/<short_code>', methods=['GET'])
-def redirect_url(short_code):
-    """Redirect to the original long URL."""
+# def redirect_url(short_code):
+#     """Redirect to the original long URL."""
+#     mapping = URLMapping.query.filter_by(short_code=short_code).first()
+#     if mapping:
+#         mapping.click_count+=1
+#         db.session.commit()
+#         return redirect(mapping.long_url)
+#     return jsonify({'error': 'URL not found'}), 404
+def redirect_to_url(short_code):
     mapping = URLMapping.query.filter_by(short_code=short_code).first()
     if mapping:
-        mapping.click_count+=1
+        mapping.click_count += 1  # ✅ Increment click count
         db.session.commit()
-        return redirect(mapping.long_url)
-    return jsonify({'error': 'URL not found'}), 404
+        return redirect(mapping.long_url)  # ✅ Redirect to original URL
+    return jsonify({"error": "URL not found"}), 404
 
 @app.route('/stats/<short_code>', methods=['GET'])
 
