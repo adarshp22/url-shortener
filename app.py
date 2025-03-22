@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import hashlib
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost/url_shortener'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Adarshpal021%40@localhost/url_shortener'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
