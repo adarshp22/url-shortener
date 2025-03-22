@@ -76,6 +76,7 @@ def index():
 #     return jsonify({'short_url': f"http://127.0.0.1:5000/{short_code}"})
 
 RAILWAY_BASE_URL = "https://url-shortener-production-8cc2.up.railway.app"
+
 # def shorten_url():
 #     """Shorten a given long URL."""
 #     if request.content_type != 'application/json':
@@ -139,22 +140,22 @@ def shorten_url():
     return jsonify({'short_url': f"{RAILWAY_BASE_URL}/{short_code}"})
 
 @app.route('/<short_code>', methods=['GET'])
-# def redirect_url(short_code):
-#     """Redirect to the original long URL."""
-#     mapping = URLMapping.query.filter_by(short_code=short_code).first()
-#     if mapping:
-#         mapping.click_count+=1
-#         db.session.commit()
-#         return redirect(mapping.long_url)
-#     return jsonify({'error': 'URL not found'}), 404
-def redirect_short_url(short_code):
-    """Redirect short URL to the original long URL."""
+def redirect_url(short_code):
+    """Redirect to the original long URL."""
     mapping = URLMapping.query.filter_by(short_code=short_code).first()
+    if mapping:
+        mapping.click_count+=1
+        db.session.commit()
+        return redirect(mapping.long_url)
+    return jsonify({'error': 'URL not found'}), 404
+# def redirect_short_url(short_code):
+#     """Redirect short URL to the original long URL."""
+#     mapping = URLMapping.query.filter_by(short_code=short_code).first()
 
-    if not mapping:
-        return jsonify({'error': 'Short URL not found'}), 404
+#     if not mapping:
+#         return jsonify({'error': 'Short URL not found'}), 404
 
-    return redirect(mapping.long_url)
+#     return redirect(mapping.long_url)
 
 @app.route('/stats/<short_code>', methods=['GET'])
 
