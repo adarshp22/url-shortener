@@ -120,9 +120,16 @@ def shorten_url():
 def redirect_to_url(short_code):
     mapping = URLMapping.query.filter_by(short_code=short_code).first()
     if mapping:
-        mapping.click_count += 1  # ✅ Increment click count
+        mapping.click_count += 1  # Update click count
         db.session.commit()
-        return redirect(mapping.long_url, code=302)  # ✅ Ensure 302 redirect
+        
+        long_url = mapping.long_url
+
+        # 🚀 Ensure URL has HTTP/HTTPS prefix
+        if not long_url.startswith("http"):
+            long_url = "https://" + long_url  # Add HTTPS if missing
+
+        return redirect(long_url, code=302)  # Redirect properly
     return jsonify({"error": "URL not found"}), 404
 
 @app.route('/stats/<short_code>', methods=['GET'])
