@@ -75,7 +75,38 @@ def index():
 
 #     return jsonify({'short_url': f"http://127.0.0.1:5000/{short_code}"})
 
+RAILWAY_BASE_URL = "https://url-shortener-production-8cc2.up.railway.app"
+# def shorten_url():
+#     """Shorten a given long URL."""
+#     if request.content_type != 'application/json':
+#         return jsonify({'error': 'Invalid content type. Use application/json'}), 415
 
+#     try:
+#         data = request.get_json()
+#         print("Received Data:", data)  # ✅ Debugging print statement
+#     except Exception as e:
+#         print("JSON Parsing Error:", str(e))
+#         return jsonify({'error': 'Invalid JSON format'}), 400
+
+#     if not data or 'long_url' not in data:
+#         return jsonify({'error': 'URL is required'}), 400
+
+#     long_url = data.get('long_url')
+#     if not long_url.strip():  # Prevent empty URLs
+#         return jsonify({'error': 'URL cannot be empty'}), 400
+
+#     # Check if URL already exists
+#     existing_entry = URLMapping.query.filter_by(long_url=long_url).first()
+#     if existing_entry:
+#         short_code = existing_entry.short_code
+#     else:
+#         short_code = generate_short_code(long_url)
+#         new_entry = URLMapping(long_url, short_code)
+#         db.session.add(new_entry)
+#         db.session.commit()
+
+#     return jsonify({'short_url': f"http://127.0.0.1:5000/{short_code}"})
+    # return jsonify({'short_url': f"https://url-shortener-production-8cc2.up.railway.app"{short_code}})
 def shorten_url():
     """Shorten a given long URL."""
     if request.content_type != 'application/json':
@@ -91,8 +122,8 @@ def shorten_url():
     if not data or 'long_url' not in data:
         return jsonify({'error': 'URL is required'}), 400
 
-    long_url = data.get('long_url')
-    if not long_url.strip():  # Prevent empty URLs
+    long_url = data.get('long_url').strip()
+    if not long_url:
         return jsonify({'error': 'URL cannot be empty'}), 400
 
     # Check if URL already exists
@@ -101,13 +132,11 @@ def shorten_url():
         short_code = existing_entry.short_code
     else:
         short_code = generate_short_code(long_url)
-        new_entry = URLMapping(long_url, short_code)
+        new_entry = URLMapping(long_url=long_url, short_code=short_code)
         db.session.add(new_entry)
         db.session.commit()
 
-    return jsonify({'short_url': f"http://127.0.0.1:5000/{short_code}"})
-    # return jsonify({'short_url': f"https://url-shortener-production-8cc2.up.railway.app"{short_code}})
-
+    return jsonify({'short_url': f"{RAILWAY_BASE_URL}/{short_code}"})
 
 @app.route('/<short_code>', methods=['GET'])
 # def redirect_url(short_code):
@@ -118,25 +147,14 @@ def shorten_url():
 #         db.session.commit()
 #         return redirect(mapping.long_url)
 #     return jsonify({'error': 'URL not found'}), 404
-def redirect_short_url():
-    data = request.json
-    long_url = data.get("long_url")
+def redirect_short_url(short_code):
+    """Redirect short URL to the original long URL."""
+    mapping = URLMapping.query.filter_by(short_code=short_code).first()
 
-    if not long_url:
-        return jsonify({"error": "Missing URL"}), 400
+    if not mapping:
+        return jsonify({'error': 'Short URL not found'}), 404
 
-    # Generate short code
-    short_code = generate_short_code()
-    
-    # Store in database
-    new_mapping = URLMapping(long_url=long_url, short_code=short_code)
-    db.session.add(new_mapping)
-    db.session.commit()
-
-   
-    railway_base_url = "https://url-shortener-production-8cc2.up.railway.app"
-    
-    return jsonify({"short_url": f"{railway_base_url}/{short_code}"})
+    return redirect(mapping.long_url)
 
 @app.route('/stats/<short_code>', methods=['GET'])
 
