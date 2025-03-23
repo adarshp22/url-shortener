@@ -61,7 +61,13 @@ def shorten_url():
     if not data or 'long_url' not in data:
         return jsonify({'error': 'URL is required'}), 400
 
+    # long_url = data.get('long_url').strip()
     long_url = data.get('long_url').strip()
+    
+    # Ensure the URL starts with http:// or https://
+    if not long_url.startswith(("http://", "https://")):
+        long_url = "https://" + long_url 
+        
     if not long_url:
         return jsonify({'error': 'URL cannot be empty'}), 400
 
