@@ -120,7 +120,8 @@ The API should now be running on `http://127.0.0.1:5000/`.
 
 ## 📝 Additional Notes
 - The same long URL always generates the same short URL.
-- The short links are **not actually shorter than Railway’s domain** (consider using a custom domain for truly short URLs).
+- The short links are **not actually shorter than Railway’s domain** (consider using a custom domain for truly short URLs). But for very large URL i.e greater than
+  length of **Railway's** domain, the short links will be really useful to use.
 - Statistics tracking allows you to see how many times a short link has been accessed.
 
 ---
