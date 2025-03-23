@@ -50,11 +50,11 @@ A simple URL shortening service similar to Bit.ly, built with **Flask** and **Po
     "click_count": 5
   }
   ```
-Handling Missing http:// or https:// in URLs
+🔧Handling Missing ** or ** in URLs
 
 If users forget to add http:// or https://, the system automatically appends https:// to ensure proper redirection.
 
-Updated Code in app.py:
+Updated Code in ``:
 
 long_url = data.get('long_url').strip()
 
@@ -62,7 +62,8 @@ long_url = data.get('long_url').strip()
 if not long_url.startswith(("http://", "https://")):
     long_url = "https://" + long_url
 
- Converts google.com → https://google.com Ensures all links redirect properly
+Converts google.com → https://google.com 
+Ensures all links redirect properly
 ---
 
 ##  How to Run Locally
