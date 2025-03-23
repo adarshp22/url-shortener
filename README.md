@@ -6,6 +6,7 @@ A simple URL shortening service similar to Bit.ly, built with **Flask** and **Po
 - **Shorten URLs**: Generate a short URL for a given long URL.
 - **Redirect to Original URL**: Short links automatically redirect users.
 - **Track Clicks**: Monitor the number of times a short link is accessed.
+- **Ensure Uniqueness**: The same long URL always maps to the same short code.
 - **Database Integration**: Store mappings between long and short URLs using PostgreSQL.
 - **Consistent Short Links**: The same long URL always maps to the same short code.
 
@@ -49,7 +50,19 @@ A simple URL shortening service similar to Bit.ly, built with **Flask** and **Po
     "click_count": 5
   }
   ```
+Handling Missing http:// or https:// in URLs
 
+If users forget to add http:// or https://, the system automatically appends https:// to ensure proper redirection.
+
+Updated Code in app.py:
+
+long_url = data.get('long_url').strip()
+
+# Ensure the URL starts with http:// or https://
+if not long_url.startswith(("http://", "https://")):
+    long_url = "https://" + long_url
+
+ Converts google.com → https://google.com Ensures all links redirect properly
 ---
 
 ##  How to Run Locally
