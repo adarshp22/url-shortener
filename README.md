@@ -14,7 +14,7 @@ A simple URL shortening service similar to Bit.ly, built with **Flask** and **Po
 ## Live Deployment
 
 The URL Shortener is live at:  
-🔗 [URL Shortener](https://url-shortener-production-8cc2.up.railway.app/)
+🔗 [my URL shortener](https://url-shortener-production-8cc2.up.railway.app/)
 
 ---
 
