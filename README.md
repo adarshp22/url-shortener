@@ -1,97 +1,124 @@
-# URL Shortener
+# URL Shortener API
 
-This is a simple URL Shortener built with Flask and PostgreSQL. It allows users to shorten URLs and track usage statistics.
+A simple URL shortening service similar to Bit.ly, built with **Flask** and **PostgreSQL**, and deployed on **Railway**.
 
-## Features
-- Shorten long URLs.
-- Redirect users when they visit a short URL.
-- Track how many times a short URL has been accessed.
+## 🚀 Features
+- **Shorten URLs**: Generate a short URL for a given long URL.
+- **Redirect to Original URL**: Short links automatically redirect users.
+- **Track Clicks**: Monitor the number of times a short link is accessed.
+- **Database Integration**: Store mappings between long and short URLs using PostgreSQL.
+- **Consistent Short Links**: The same long URL always maps to the same short code.
 
-## Setup Instructions
+---
+
+## 📌 API Endpoints
+
+### 1️⃣ Shorten a URL
+- **Endpoint**: `POST /shorten`
+- **Description**: Converts a long URL into a short URL.
+- **Request Body (JSON)**:
+  ```json
+  {
+    "long_url": "https://www.codechef.com/learn"
+  }
+  ```
+- **Response (JSON)**:
+  ```json
+  {
+    "short_url": "https://url-shortener-production-8cc2.up.railway.app/a1a68f"
+  }
+  ```
+
+### 2️⃣ Redirect to Original URL
+- **Endpoint**: `GET /<short_code>`
+- **Description**: Redirects users to the original long URL.
+- **Example**: Accessing `https://url-shortener-production-8cc2.up.railway.app/a1a68f` redirects to `https://www.codechef.com/learn`.
+
+### 3️⃣ Get Click Statistics
+- **Endpoint**: `GET /stats/<short_code>`
+- **Description**: Fetch statistics for a short URL.
+- **Example Request**:
+  ```bash
+  GET https://url-shortener-production-8cc2.up.railway.app/stats/a1a68f
+  ```
+- **Example Response (JSON)**:
+  ```json
+  {
+    "long_url": "https://www.codechef.com/learn",
+    "short_url": "https://url-shortener-production-8cc2.up.railway.app/a1a68f",
+    "click_count": 5
+  }
+  ```
+
+---
+
+## 🛠️ How to Run Locally
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/<your-github-username>/url-shortener.git
+git clone https://github.com/yourusername/url-shortener.git
 cd url-shortener
+```
 
-2️⃣ Install Dependencies
-Make sure you have Python and PostgreSQL installed, then run:
+### 2️⃣ Set Up a Virtual Environment (Optional but Recommended)
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-bash
-Copy
-Edit
+### 3️⃣ Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-3️⃣ Configure Database
-Open PostgreSQL and create a new database:
+### 4️⃣ Set Up Environment Variables
+Create a `.env` file and define your **PostgreSQL Database URL**:
+```
+DATABASE_URL=postgresql://username:password@localhost/url_shortener
+```
 
-sql
-Copy
-Edit
-CREATE DATABASE url_shortener;
+### 5️⃣ Initialize the Database
+```python
+from app import db
+from app import app
 
+with app.app_context():
+    db.create_all()
+```
 
-Update app.py with your database credentials:
+### 6️⃣ Run the Server
+```bash
+flask run  # or python app.py
+```
 
-python
-Copy
-Edit
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/url_shortener'
+The API should now be running on `http://127.0.0.1:5000/`.
 
+---
 
+## 🛠️ Deployment
+### ✅ **Deploying on Railway**
+1. Sign up at [Railway](https://railway.app/)
+2. Create a new project and connect your GitHub repository.
+3. Add an environment variable `DATABASE_URL` pointing to your PostgreSQL instance.
+4. Deploy and obtain your production URL.
 
-4️⃣ Run the Application
-bash
-Copy
-Edit
-python app.py
-Visit http://127.0.0.1:5000 in your browser.
+---
 
+## 📝 Additional Notes
+- The same long URL always generates the same short URL.
+- The short links are **not actually shorter than Railway’s domain** (consider using a custom domain for truly short URLs).
+- Statistics tracking allows you to see how many times a short link has been accessed.
 
-API Endpoints
-1. Shorten a URL
-Request:
+---
 
-bash
-Copy
-Edit
-POST /shorten
-Content-Type: application/json
+## 📄 License
+This project is open-source and available under the [MIT License](LICENSE).
 
-{
-  "long_url": "https://www.example.com"
-}
-Response:
+---
 
-json
-Copy
-Edit
-{
-  "short_url": "http://127.0.0.1:5000/abc123"
-}
-2. Redirect to the Original URL
-Request:
+## 📞 Contact
+For any queries, reach out to me at:
+- **Email**: adarshp22@iitk.ac.in
+- **GitHub**: [github.com/adarshp22](https://github.com/adarshp22)
+- **LinkedIn**: [linkedin.com/in/adarsh-pal-816764255](https://www.linkedin.com/in/adarsh-pal-816764255/)
 
-bash
-Copy
-Edit
-GET /abc123
-Redirects to: https://www.example.com
-
-3. Get URL Statistics
-Request:
-
-bash
-Copy
-Edit
-GET /stats/abc123
-Response:
-
-json
-Copy
-Edit
-{
-  "long_url": "https://www.example.com",
-  "short_url": "http://127.0.0.1:5000/abc123",
-  "click_count": 5
-}
