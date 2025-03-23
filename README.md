@@ -2,7 +2,7 @@
 
 A simple URL shortening service similar to Bit.ly, built with **Flask** and **PostgreSQL**, and deployed on **Railway**.
 
-## 🚀 Features
+##  Features
 - **Shorten URLs**: Generate a short URL for a given long URL.
 - **Redirect to Original URL**: Short links automatically redirect users.
 - **Track Clicks**: Monitor the number of times a short link is accessed.
@@ -52,7 +52,7 @@ A simple URL shortening service similar to Bit.ly, built with **Flask** and **Po
 
 ---
 
-## 🛠️ How to Run Locally
+##  How to Run Locally
 
 ### 1️⃣ Clone the Repository
 ```bash
@@ -96,7 +96,7 @@ The API should now be running on `http://127.0.0.1:5000/`.
 ---
 
 ## 🛠️ Deployment
-### ✅ **Deploying on Railway**
+###  **Deploying on Railway**
 1. Sign up at [Railway](https://railway.app/)
 2. Create a new project and connect your GitHub repository.
 3. Add an environment variable `DATABASE_URL` pointing to your PostgreSQL instance.
@@ -111,8 +111,7 @@ The API should now be running on `http://127.0.0.1:5000/`.
 
 ---
 
-## 📄 License
-This project is open-source and available under the [MIT License](LICENSE).
+
 
 ---
 
