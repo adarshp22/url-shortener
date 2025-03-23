@@ -1,4 +1,4 @@
-# URL Shortener
+# URL Shortener API
 
 A simple URL shortening service similar to Bit.ly, built with **Flask** and **PostgreSQL**, and deployed on **Railway**.
 
