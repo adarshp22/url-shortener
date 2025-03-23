@@ -11,6 +11,12 @@ A simple URL shortening service similar to Bit.ly, built with **Flask** and **Po
 - **Consistent Short Links**: The same long URL always maps to the same short code.
 
 ---
+## Live Deployment
+
+The URL Shortener is live at:  
+🔗 [URL Shortener](https://url-shortener-production-8cc2.up.railway.app/)
+
+---
 
 ## 📌 API Endpoints
 
